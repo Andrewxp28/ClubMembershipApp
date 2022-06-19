@@ -29,17 +29,17 @@ public class MemberTest {
     @Test
     public void findOneMemberTest() {
         Member member = new Member("a.p@gmail.com", "Andrew", "Pham", "0466503107");
-        dao.insertOne(member);
-        Member rsMember = dao.findOne(member.getEmail());
+        dao.insertOneMember(member);
+        Member rsMember = dao.findOneMember(member.getEmail());
         Assertions.assertEquals(member, rsMember);
-        //dao.deleteOne(member.getEmail());
+        //dao.deleteOneMember(member.getEmail());
         System.out.println("Found a member successfully");
     }
 
     @Test
     public void memberNotFoundTest() {
         String email = "1234567890";
-        Member rsMember = dao.findOne(email);
+        Member rsMember = dao.findOneMember(email);
         Assertions.assertNull(rsMember);
         System.out.println("Member not found successfully");
     }

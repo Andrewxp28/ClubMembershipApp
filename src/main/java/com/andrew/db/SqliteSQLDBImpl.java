@@ -1,9 +1,10 @@
 package com.andrew.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import org.sqlite.SQLiteConfig;
+
+import java.lang.reflect.MalformedParameterizedTypeException;
+import java.sql.*;
+import java.util.Map;
 
 public class SqliteSQLDBImpl implements SQLDB {
     private static SqliteSQLDBImpl db;
@@ -17,6 +18,10 @@ public class SqliteSQLDBImpl implements SQLDB {
         return db;
     }
     @Override
+    /**
+     *
+     *
+     */
     public Connection getConnection() {
         // connect to the db based on path.
         try {
@@ -25,7 +30,9 @@ public class SqliteSQLDBImpl implements SQLDB {
                     return conn;
             }
             // if not valid or hasn't been connected, then we go connect to database.
-            conn = DriverManager.getConnection(path);
+            SQLiteConfig config = new SQLiteConfig();
+            config.enforceForeignKeys(true);
+            conn = DriverManager.getConnection(path, config.toProperties());
             System.out.println("Connection to SQLite has been established.");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -49,7 +56,7 @@ public class SqliteSQLDBImpl implements SQLDB {
     }
 
     @Override
-    public void createTable(String name, String... fields) {
+    public void createTable(String name, Map<String, Map.Entry<String, String>> foreignKeys, String... fields) {
         // do I need to check if field is null? or length == 0?
         // must have one or more fields/columns
         if (fields.length == 0) return;
@@ -65,6 +72,27 @@ public class SqliteSQLDBImpl implements SQLDB {
                 // not the last item so we add a comma
                 statement.append(", ");
             }
+
+        }
+        // add foreign keys if any
+        if (foreignKeys != null && !foreignKeys.isEmpty()) {
+            statement.append(", ");
+            for (Map.Entry<String, Map.Entry<String, String>> fKey: foreignKeys.entrySet()) {
+                //statement
+                statement.append("FOREIGN KEY")
+                        .append(" (")
+                        .append(fKey.getKey())
+                        .append(")")
+                        .append(" REFERENCES ")
+                        .append(fKey.getValue().getKey())
+                        .append(" (")
+                        .append(fKey.getValue().getValue())
+                        .append(") ")
+                        .append("ON UPDATE CASCADE ON DELETE CASCADE")
+                        .append(",");
+            }
+            // removes last comma
+            statement.deleteCharAt(statement.length()-1);
 
         }
         // close
@@ -88,4 +116,30 @@ public class SqliteSQLDBImpl implements SQLDB {
         return conn;
     }
 
+    @Override
+    /**  Makes a sqlite Database file if one does already exist. configures the database.
+     *
+     */
+    public void initialiseDb(String path) {
+        setPath(path);
+        conn = getConnection();
+        // creates a table in db for members
+        createTable("members", null,
+                "email TEXT PRIMARY KEY NOT NULL",
+                "firstName TEXT NOT NULL",
+                "lastName TEXT NOT NULL",
+                "phone TEXT");
+        // creates a table in db for memberships
+
+    }
+
+    @Override
+    public void executeCommand(String command) {
+        // prepping statement and executing statement.
+        try (PreparedStatement pstmt = conn.prepareStatement(command)){
+            pstmt.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

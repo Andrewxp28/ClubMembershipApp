@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface MemberDAO {
 
-    public Member findOne(String email);
-    public List<Member> findAll();
-    public boolean deleteOne(String email);
-    public boolean deleteAll();
-    public boolean updateOne(Member member);
-    public boolean insertOne(Member member);
+    public Member findOneMember(String email);
+    public List<Member> findAllMembers();
+    public boolean deleteOneMember(String email);
+    public boolean deleteAllMembers();
+    public boolean updateOneMember(Member member);
+    public boolean insertOneMember(Member member);
 }

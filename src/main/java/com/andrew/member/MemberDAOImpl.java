@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberDAOImpl implements MemberDAO {
-    private SQLDB db;
+    private final SQLDB db;
 
     public MemberDAOImpl() {
         db = SqliteSQLDBImpl.getInstance();
     }
 
     @Override
-    public Member findOne(String email) {
+    public Member findOneMember(String email) {
         StringBuilder stmt = new StringBuilder("SELECT * FROM members WHERE ");
         stmt.append("email = \"").append(email).append("\";");
         try {
@@ -42,7 +42,7 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     @Override
-    public List<Member> findAll() {
+    public List<Member> findAllMembers() {
 
         StringBuilder stmt = new StringBuilder("SELECT * FROM members;");
         try {
@@ -67,24 +67,25 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     @Override
-    public boolean deleteOne(String email) {
+    public boolean deleteOneMember(String email) {
         return false;
     }
 
     @Override
-    public boolean deleteAll() {
+    public boolean deleteAllMembers() {
         return false;
     }
 
     @Override
-    public boolean updateOne(Member member) {
+    public boolean updateOneMember(Member member) {
         return false;
     }
 
     @Override
-    public boolean insertOne(Member member) {
+    public boolean insertOneMember(Member member) {
+        // I think this suppose to be in the Service Layer.
         // need to check if the email is unique
-        if (findOne(member.getEmail()) != null) {
+        if (findOneMember(member.getEmail()) != null) {
             // there is already an existing member with that email in the system.
             /*
             System.out.println("There is already an existing member with the email: " +
