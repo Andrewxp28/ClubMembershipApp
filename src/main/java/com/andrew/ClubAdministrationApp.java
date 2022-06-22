@@ -14,10 +14,7 @@ public class ClubAdministrationApp {
         System.out.println("Hello Andrew");
 
         SQLDB db = SqliteSQLDBImpl.getInstance();
-        // set path first
-        db.setPath("ClubDb3.db");
-        db.getConnection();
-        db.createTable("members", null,"email TEXT PRIMARY KEY", "firstName TEXT", "lastName TEXT", "phone TEXT");
+        db.initialiseDb("ClubDb4.db");
         MemberDAO memberDAO = new MemberDAOImpl();
         Member member1 = new Member("a.p@gmail.com", "Andrew", "Pham", "0466503107");
         Member member2 = new Member("andy.fam@gmail.com", "Andy", "fam", "1234567890");

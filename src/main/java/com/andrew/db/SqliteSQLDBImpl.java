@@ -2,8 +2,11 @@ package com.andrew.db;
 
 import org.sqlite.SQLiteConfig;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
+import java.awt.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SqliteSQLDBImpl implements SQLDB {
@@ -55,8 +58,8 @@ public class SqliteSQLDBImpl implements SQLDB {
        }
     }
 
-    @Override
-    public void createTable(String name, Map<String, Map.Entry<String, String>> foreignKeys, String... fields) {
+    //@Override
+    public void createTable(String name, Map<String, List<String>> foreignKeys, String... fields) {
         // do I need to check if field is null? or length == 0?
         // must have one or more fields/columns
         if (fields.length == 0) return;
@@ -77,16 +80,16 @@ public class SqliteSQLDBImpl implements SQLDB {
         // add foreign keys if any
         if (foreignKeys != null && !foreignKeys.isEmpty()) {
             statement.append(", ");
-            for (Map.Entry<String, Map.Entry<String, String>> fKey: foreignKeys.entrySet()) {
+            for (Map.Entry<String, List<String>> fKey: foreignKeys.entrySet()) {
                 //statement
                 statement.append("FOREIGN KEY")
                         .append(" (")
                         .append(fKey.getKey())
                         .append(")")
                         .append(" REFERENCES ")
-                        .append(fKey.getValue().getKey())
+                        .append(fKey.getValue().get(0))
                         .append(" (")
-                        .append(fKey.getValue().getValue())
+                        .append(fKey.getValue().get(1))
                         .append(") ")
                         .append("ON UPDATE CASCADE ON DELETE CASCADE")
                         .append(",");
@@ -97,6 +100,7 @@ public class SqliteSQLDBImpl implements SQLDB {
         }
         // close
         statement.append(");");
+        System.out.println(statement);
         // prepping statement and executing statement.
         try (PreparedStatement pstmt = conn.prepareStatement(statement.toString())){
             pstmt.executeUpdate();
@@ -106,6 +110,44 @@ public class SqliteSQLDBImpl implements SQLDB {
 
     }
 
+    public void createMembersTable() {
+        // making sql statement to create a table for members
+        String stmt = "CREATE TABLE IF NOT EXISTS members (\n" +
+                "    email     TEXT PRIMARY KEY\n" +
+                "                   NOT NULL\n" +
+                "                   UNIQUE,\n" +
+                "    firstName TEXT NOT NULL,\n" +
+                "    lastName  TEXT NOT NULL,\n" +
+                "    phone     TEXT NOT NULL\n" +
+                ");";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(stmt);
+            pstmt.executeUpdate();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+    }
+    public void createMembershipTable() {
+        // making sql statement to create a table for members
+        String stmt = "CREATE TABLE IF NOT EXISTS memberships (\n" +
+                "    membership_id INTEGER PRIMARY KEY AUTOINCREMENT\n" +
+                "                          UNIQUE\n" +
+                "                          NOT NULL,\n" +
+                "    start_date    DATE    NOT NULL,\n" +
+                "    end_date      DATE    NOT NULL,\n" +
+                "    type          TEXT    NOT NULL,\n" +
+                "    member_email  TEXT    NOT NULL\n" +
+                "                          REFERENCES members (email) ON DELETE CASCADE\n" +
+                "                                                     ON UPDATE CASCADE\n" +
+                ");";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(stmt);
+            pstmt.executeUpdate();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+    }
 
     @Override
     public void setPath(String path) {
@@ -124,13 +166,9 @@ public class SqliteSQLDBImpl implements SQLDB {
         setPath(path);
         conn = getConnection();
         // creates a table in db for members
-        createTable("members", null,
-                "email TEXT PRIMARY KEY NOT NULL",
-                "firstName TEXT NOT NULL",
-                "lastName TEXT NOT NULL",
-                "phone TEXT");
+        createMembersTable();
         // creates a table in db for memberships
-
+        createMembershipTable();
     }
 
     @Override

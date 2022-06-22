@@ -68,16 +68,32 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public boolean deleteOneMember(String email) {
-        return false;
+        StringBuilder stmt = new StringBuilder("DELETE FROM members WHERE ");
+        stmt.append("email = \"").append(email).append("\";");
+        try {
+            PreparedStatement pstmt = db.getConnection().prepareStatement(stmt.toString());
+            pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean deleteAllMembers() {
+        String stmt = "DELETE FROM members;";
+        try {
+            PreparedStatement pstmt = db.getConnection().prepareStatement(stmt);
+            pstmt.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return false;
     }
 
     @Override
-    public boolean updateOneMember(Member member) {
+    public boolean updateOneMember(String memberEmail, String fieldToUpdate, String newValue) {
         return false;
     }
 

@@ -1,5 +1,12 @@
 package com.andrew.member;
 
+import com.andrew.membership.Membership;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 public class Member implements Comparable<Member> {
     private String email;
     private String firstName;
@@ -12,6 +19,7 @@ public class Member implements Comparable<Member> {
         this.lastName = lastName;
         this.phone = phone;
     }
+
 
     @Override
     public String toString() {
@@ -62,6 +70,5 @@ public class Member implements Comparable<Member> {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
 
 }
