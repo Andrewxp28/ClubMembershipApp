@@ -36,7 +36,7 @@ public class SqliteSQLDBImpl implements SQLDB {
             SQLiteConfig config = new SQLiteConfig();
             config.enforceForeignKeys(true);
             conn = DriverManager.getConnection(path, config.toProperties());
-            System.out.println("Connection to SQLite has been established.");
+            //System.out.println("Connection to SQLite has been established.");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -48,11 +48,11 @@ public class SqliteSQLDBImpl implements SQLDB {
     public void closeConnection() {
        try {
            if (conn.isClosed()) {
-               System.out.println("Connection to SQLite has already been closed.");
+               //System.out.println("Connection to SQLite has already been closed.");
                return;
            }
            conn.close();
-           System.out.println("Connection to SQLite has been closed.");
+           //System.out.println("Connection to SQLite has been closed.");
        } catch (SQLException throwables) {
            throwables.printStackTrace();
        }
