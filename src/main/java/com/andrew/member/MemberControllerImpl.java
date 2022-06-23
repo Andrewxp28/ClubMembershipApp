@@ -26,7 +26,8 @@ public class MemberControllerImpl implements MemberController {
                 "4: Add a member",
                 "5: Update a member's details",
                 "6: Delete a member",
-                "7: Return to main menu"};
+                "7: Delete ALL members",
+                "8: Return to main menu"};
         for (String option: options) {
             System.out.println(option);
         }
@@ -72,7 +73,9 @@ public class MemberControllerImpl implements MemberController {
             case 5 -> displayFormAndUpdateOneMember();
             // Delete a member
             case 6 -> displayFormAndDeleteOneMember();
-            // for case 7 and others we just return to main menu
+            // for case 7
+            case 7 -> displayAndDeleteAllMembers();
+            // and for other cases we just return to main menu
         }
     }
 
@@ -261,7 +264,28 @@ public class MemberControllerImpl implements MemberController {
 
     @Override
     public void displayAndDeleteAllMembers() {
-
+        printOneSpacer();
+        System.out.print("Warning: This will delete all members and their corresponding memberships for the database" +
+                ". Do you wish to continue? (y/n): ");
+        String ans;
+        Scanner scanner = new Scanner(System.in);
+        try {
+            ans = scanner.next();
+            ans = ans.toLowerCase();
+        } catch (Exception ex) {
+            System.out.println("An unexpected error has happened. Please try again.");
+            return;
+        }
+        if (ans.equals("y")) {
+            // delete members from db
+            if (memberService.deleteAllMembers()) {
+                System.out.println("Deleted all members and their corresponding memberships successfully");
+            } else {
+                System.out.println("Unexpected error. Please try again.");
+            }
+        }
+        // else we just return to main menu;
+        printOneSpacer();
     }
 
 

@@ -87,10 +87,11 @@ public class MemberDAOImpl implements MemberDAO {
         try {
             PreparedStatement pstmt = db.getConnection().prepareStatement(stmt);
             pstmt.executeUpdate();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override

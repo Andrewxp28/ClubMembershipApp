@@ -227,8 +227,8 @@ public class MembershipDAOImpl implements MembershipDAO {
             return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
