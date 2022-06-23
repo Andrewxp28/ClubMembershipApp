@@ -6,6 +6,7 @@ import com.andrew.db.SqliteSQLDBImpl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,8 +96,8 @@ public class MemberDAOImpl implements MemberDAO {
     @Override
     public boolean updateOneMember(String memberEmail, Member newMemberDetails) {
 
-        String stmt = "UPDATE members SET " +
-                "SET email = \"" + newMemberDetails.getEmail() + "\"," +
+        String stmt = "UPDATE members SET" +
+                " email = \"" + newMemberDetails.getEmail() + "\"," +
                 " first_name = \"" + newMemberDetails.getFirstName() + "\"," +
                 " last_name = \"" + newMemberDetails.getLastName() + "\"," +
                 " phone = \"" + newMemberDetails.getPhone() + "\" " +
@@ -114,18 +115,6 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public boolean insertOneMember(Member member) {
-        // I think this suppose to be in the Service Layer.
-        // need to check if the email is unique
-        /*
-        if (findOneMember(member.getEmail()) != null) {
-            // there is already an existing member with that email in the system.
-            System.out.println("There is already an existing member with the email: " +
-                    member.getEmail());
-
-            return false;
-        }
-        */
-
 
         // building sql statement;
         StringBuilder stmt = new StringBuilder(
@@ -142,6 +131,9 @@ public class MemberDAOImpl implements MemberDAO {
             // execute statement
             pstmt.executeUpdate();
             return true;
+        } catch (SQLIntegrityConstraintViolationException throwables) {
+            System.out.println("A member with this email already exists.");
+            return false;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;

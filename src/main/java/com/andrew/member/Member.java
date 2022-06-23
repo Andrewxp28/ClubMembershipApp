@@ -23,10 +23,10 @@ public class Member implements Comparable<Member> {
 
     @Override
     public String toString() {
-        return "{email: " + email +
-                ", first name: " + firstName +
-                ", last name: " + lastName +
-                ", phone: " + phone + "}";
+        return "{EMAIL: " + email +
+                ", FIRST_NAME: " + firstName +
+                ", LAST_NAME: " + lastName +
+                ", PHONE: " + phone + "}";
     }
     @Override
     public final boolean equals(Object obj) {
