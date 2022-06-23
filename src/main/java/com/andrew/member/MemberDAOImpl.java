@@ -116,15 +116,15 @@ public class MemberDAOImpl implements MemberDAO {
     public boolean insertOneMember(Member member) {
         // I think this suppose to be in the Service Layer.
         // need to check if the email is unique
+        /*
         if (findOneMember(member.getEmail()) != null) {
             // there is already an existing member with that email in the system.
-            /*
             System.out.println("There is already an existing member with the email: " +
                     member.getEmail());
 
-             */
             return false;
         }
+        */
 
 
         // building sql statement;

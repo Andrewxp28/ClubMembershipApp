@@ -58,57 +58,6 @@ public class SqliteSQLDBImpl implements SQLDB {
        }
     }
 
-    //@Override
-    public void createTable(String name, Map<String, List<String>> foreignKeys, String... fields) {
-        // do I need to check if field is null? or length == 0?
-        // must have one or more fields/columns
-        if (fields.length == 0) return;
-        // making sql statement to create a table
-        StringBuilder statement = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
-        //statement.append("main.");
-        statement.append(name);
-        statement.append("(");
-        // adding field specifications of table
-        for (int i=0; i<fields.length; i++) {
-            statement.append(fields[i]);
-            if (i < fields.length - 1) {
-                // not the last item so we add a comma
-                statement.append(", ");
-            }
-
-        }
-        // add foreign keys if any
-        if (foreignKeys != null && !foreignKeys.isEmpty()) {
-            statement.append(", ");
-            for (Map.Entry<String, List<String>> fKey: foreignKeys.entrySet()) {
-                //statement
-                statement.append("FOREIGN KEY")
-                        .append(" (")
-                        .append(fKey.getKey())
-                        .append(")")
-                        .append(" REFERENCES ")
-                        .append(fKey.getValue().get(0))
-                        .append(" (")
-                        .append(fKey.getValue().get(1))
-                        .append(") ")
-                        .append("ON UPDATE CASCADE ON DELETE CASCADE")
-                        .append(",");
-            }
-            // removes last comma
-            statement.deleteCharAt(statement.length()-1);
-
-        }
-        // close
-        statement.append(");");
-        System.out.println(statement);
-        // prepping statement and executing statement.
-        try (PreparedStatement pstmt = conn.prepareStatement(statement.toString())){
-            pstmt.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-    }
 
     public void createMembersTable() {
         // making sql statement to create a table for members
@@ -153,9 +102,6 @@ public class SqliteSQLDBImpl implements SQLDB {
     public void setPath(String path) {
         //path = fixFileSeparators(path);
         SqliteSQLDBImpl.path = DEFAULT_PATH_STARTER + path;
-    }
-    public Connection getConn() {
-        return conn;
     }
 
     @Override

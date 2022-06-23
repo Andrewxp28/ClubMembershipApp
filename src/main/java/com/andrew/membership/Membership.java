@@ -11,7 +11,7 @@ public class Membership {
     private String memberEmail;
     private MembershipType type;
     private int membershipId;
-
+    // returning constructor when retrieving from db
     public Membership(LocalDate startDate, LocalDate endDate, String memberEmail, MembershipType type, int membershipId) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -19,7 +19,7 @@ public class Membership {
         this.type = type;
         this.membershipId = membershipId;
     }
-
+    // inisial constructor. (we don't manually assign an membershipId, db does this for us.
     public Membership(LocalDate startDate, LocalDate endDate, String memberEmail, MembershipType type) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -41,6 +41,27 @@ public class Membership {
                 );
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "membership_id = " + this.membershipId +
+                ", start_date: " + this.getStartDate() +
+                ", end_date: " + this.getEndDate() +
+                ", member_email: " + this.getMemberEmail() +
+                ", type: " + this.getType() +
+                "}";
+    }
+
+    /*
+
+    @Override
+    public String toString() {
+        return "{email: " + email +
+                ", first name: " + firstName +
+                ", last name: " + lastName +
+                ", phone: " + phone + "}";
+    }
+     */
     public LocalDate getStartDate() {
         return startDate;
     }
