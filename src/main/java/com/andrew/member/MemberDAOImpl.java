@@ -93,7 +93,22 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     @Override
-    public boolean updateOneMember(String memberEmail, String fieldToUpdate, String newValue) {
+    public boolean updateOneMember(String memberEmail, Member newMemberDetails) {
+
+        String stmt = "UPDATE members SET " +
+                "SET email = \"" + newMemberDetails.getEmail() + "\"," +
+                " first_name = \"" + newMemberDetails.getFirstName() + "\"," +
+                " last_name = \"" + newMemberDetails.getLastName() + "\"," +
+                " phone = \"" + newMemberDetails.getPhone() + "\" " +
+                "WHERE email = \"" + memberEmail + "\";";
+
+        try {
+            PreparedStatement pstmt = db.getConnection().prepareStatement(stmt);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return false;
     }
 
@@ -115,7 +130,7 @@ public class MemberDAOImpl implements MemberDAO {
         // building sql statement;
         StringBuilder stmt = new StringBuilder(
                 "INSERT INTO members" +
-                "(email,firstName,lastName,phone) " +
+                "(email,first_name,last_name,phone) " +
                 "VALUES(?,?,?,?);");
         try {
             // making formatted sql statement and filling in values.

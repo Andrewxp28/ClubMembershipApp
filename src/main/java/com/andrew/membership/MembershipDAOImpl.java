@@ -28,16 +28,17 @@ public class MembershipDAOImpl implements MembershipDAO {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 // extracting fields from result set containing a record of membership
-                String rsStartDate = rs.getString(1);
-                String rsEndDate = rs.getString(2);
-                String rsType = rs.getString(3);
-                String rsMemberEmail = rs.getString(4);
+                int rsMembershipId = rs.getInt(1);
+                String rsStartDate = rs.getString(2);
+                String rsEndDate = rs.getString(3);
+                String rsType = rs.getString(4);
+                String rsMemberEmail = rs.getString(5);
 
                 LocalDate startDate = LocalDate.parse(rsStartDate);
                 LocalDate endDate = LocalDate.parse(rsEndDate);
                 MembershipType type = MembershipType.valueOf(rsType);
                 // return membership
-                return new Membership(startDate, endDate, rsMemberEmail, type);
+                return new Membership(startDate, endDate, rsMemberEmail, type, rsMembershipId);
             } else {
                 return null;
             }
@@ -62,15 +63,16 @@ public class MembershipDAOImpl implements MembershipDAO {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 // extracting fields from result set containing a record of membership
-                String rsStartDate = rs.getString(1);
-                String rsEndDate = rs.getString(2);
-                String rsType = rs.getString(3);
-                String rsMemberEmail = rs.getString(4);
+                int rsMembershipId = rs.getInt(1);
+                String rsStartDate = rs.getString(2);
+                String rsEndDate = rs.getString(3);
+                String rsType = rs.getString(4);
+                String rsMemberEmail = rs.getString(5);
 
                 LocalDate startDate = LocalDate.parse(rsStartDate);
                 LocalDate endDate = LocalDate.parse(rsEndDate);
                 MembershipType type = MembershipType.valueOf(rsType);
-                return new Membership(startDate, endDate, rsMemberEmail, type);
+                return new Membership(startDate, endDate, rsMemberEmail, type, rsMembershipId);
             } else {
                 return null;
             }
@@ -83,22 +85,23 @@ public class MembershipDAOImpl implements MembershipDAO {
     public List<Membership> findAllMembershipsOfOneMember(String memberEmail) {
 
         List<Membership> rsMemberships = new ArrayList<>();
-        String stmt = "SELECT * FROM memberships WHERE email = \"" + memberEmail + "\";";
+        String stmt = "SELECT * FROM memberships WHERE member_email = \"" + memberEmail + "\";";
         try {
             PreparedStatement pstmt = db.getConnection().prepareStatement(stmt);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 // getting fields from the result set which contains a record of memberships.
-                String rsStartDate = rs.getString(1);
-                String rsEndDate = rs.getString(2);
-                String rsType = rs.getString(3);
-                String rsMemberEmail = rs.getString(4);
+                int rsMembershipId = rs.getInt(1);
+                String rsStartDate = rs.getString(2);
+                String rsEndDate = rs.getString(3);
+                String rsType = rs.getString(4);
+                String rsMemberEmail = rs.getString(5);
 
                 LocalDate startDate = LocalDate.parse(rsStartDate);
                 LocalDate endDate = LocalDate.parse(rsEndDate);
                 MembershipType type = MembershipType.valueOf(rsType);
                 // making membership object to return
-                rsMemberships.add(new Membership(startDate, endDate, rsMemberEmail, type));
+                rsMemberships.add(new Membership(startDate, endDate, rsMemberEmail, type, rsMembershipId));
             }
             // return list of memberships
             return rsMemberships.size() == 0? null: rsMemberships;
@@ -118,16 +121,17 @@ public class MembershipDAOImpl implements MembershipDAO {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 // getting fields from the result set which contains a record of memberships.
-                String rsStartDate = rs.getString(1);
-                String rsEndDate = rs.getString(2);
-                String rsType = rs.getString(3);
-                String rsMemberEmail = rs.getString(4);
+                int rsMembershipId = rs.getInt(1);
+                String rsStartDate = rs.getString(2);
+                String rsEndDate = rs.getString(3);
+                String rsType = rs.getString(4);
+                String rsMemberEmail = rs.getString(5);
 
                 LocalDate startDate = LocalDate.parse(rsStartDate);
                 LocalDate endDate = LocalDate.parse(rsEndDate);
                 MembershipType type = MembershipType.valueOf(rsType);
                 // making membership object to return
-                rsMemberships.add(new Membership(startDate, endDate, rsMemberEmail, type));
+                rsMemberships.add(new Membership(startDate, endDate, rsMemberEmail, type, rsMembershipId));
             }
             return rsMemberships.size() == 0? null: rsMemberships;
         } catch (SQLException throwables) {
@@ -160,19 +164,59 @@ public class MembershipDAOImpl implements MembershipDAO {
         }
         return false;
     }
-
+    /*
     @Override
     public boolean updateOneMembership(Membership membership) {
         return false;
     }
 
+     */
+
     @Override
     public boolean deleteOneMembership(Membership membership) {
+        StringBuilder stmt = new StringBuilder("DELETE FROM memberships WHERE ");
+        stmt
+                .append("start_date = \"").append(membership.getStartDate().toString()).append("\" ")
+                .append("AND ")
+                .append("end_date = \"").append(membership.getEndDate().toString()).append("\" ")
+                .append("AND ")
+                .append("type = \"").append(membership.getType().toString()).append("\" ")
+                .append("AND ")
+                .append("member_email = \"").append(membership.getMemberEmail()).append("\";");
+        try {
+            PreparedStatement pstmt = db.getConnection().prepareStatement(stmt.toString());
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteOneMembership(int membershipId) {
+        String stmt = "DELETE FROM memberships WHERE " +
+                "membership_id = " + membershipId + ";";
+        try {
+            PreparedStatement pstmt = db.getConnection().prepareStatement(stmt);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return false;
     }
 
     @Override
     public boolean deleteAllMemberships() {
+        String stmt = "DELETE FROM memberships;";
+        try {
+            PreparedStatement pstmt = db.getConnection().prepareStatement(stmt);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return false;
     }
 }

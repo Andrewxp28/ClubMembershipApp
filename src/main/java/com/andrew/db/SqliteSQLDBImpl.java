@@ -116,8 +116,8 @@ public class SqliteSQLDBImpl implements SQLDB {
                 "    email     TEXT PRIMARY KEY\n" +
                 "                   NOT NULL\n" +
                 "                   UNIQUE,\n" +
-                "    firstName TEXT NOT NULL,\n" +
-                "    lastName  TEXT NOT NULL,\n" +
+                "    first_name TEXT NOT NULL,\n" +
+                "    last_name  TEXT NOT NULL,\n" +
                 "    phone     TEXT NOT NULL\n" +
                 ");";
         try {

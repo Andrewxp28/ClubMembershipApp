@@ -10,6 +10,15 @@ public class Membership {
     private LocalDate endDate;
     private String memberEmail;
     private MembershipType type;
+    private int membershipId;
+
+    public Membership(LocalDate startDate, LocalDate endDate, String memberEmail, MembershipType type, int membershipId) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.memberEmail = memberEmail;
+        this.type = type;
+        this.membershipId = membershipId;
+    }
 
     public Membership(LocalDate startDate, LocalDate endDate, String memberEmail, MembershipType type) {
         this.startDate = startDate;
@@ -24,10 +33,12 @@ public class Membership {
         if (this == obj) return true;
         if (!(obj instanceof Membership)) return false;
         Membership membership = (Membership) obj;
-        return (memberEmail.equals(membership.getMemberEmail()) &&
-                type.equals(membership.getType()) &&
-                startDate.equals(membership.getStartDate()) &&
-                endDate.equals(membership.getEndDate()));
+        return (membershipId == membership.getMembershipId() ||
+                    (this.getMemberEmail().equals(membership.getMemberEmail()) &&
+                     this.getStartDate().equals(membership.getStartDate()) &&
+                     this.getEndDate().equals(membership.getEndDate()) &&
+                     this.getType().equals(membership.getType()))
+                );
     }
 
     public LocalDate getStartDate() {
@@ -60,5 +71,13 @@ public class Membership {
 
     public void setType(MembershipType type) {
         this.type = type;
+    }
+
+    public int getMembershipId() {
+        return membershipId;
+    }
+
+    public void setMembershipId(int membershipId) {
+        this.membershipId = membershipId;
     }
 }
