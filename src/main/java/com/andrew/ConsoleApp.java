@@ -13,13 +13,6 @@ import java.util.Scanner;
 
 public class ConsoleApp {
     public static void main(String[] args) {
-        /*
-        String[] mainMenuOptions =
-                {"1: Member Management",
-                 "2: Membership Management",
-                 "3: exit"
-                };
-         */
         // runs console application
         run();
     }
@@ -49,9 +42,8 @@ public class ConsoleApp {
                 scanner.next();
             } catch (Exception ex) {
                 System.out.println("An unexpected error happened. Please try again.");
-                //scanner.next();
+                scanner.next();
             }
-
             // activate specific action based on option value
 
             // user wants to exit
@@ -67,22 +59,15 @@ public class ConsoleApp {
                 we can separate these options into two categories, members and membership options.
                 we need options for:
                 - seeing all members
+                - seeing active members
                 - finding one member
                 - adding a member
                 - updating a member
                 - deleting a member
 
-                - seeing active members?
-                // steps for above.
-                // need to select memberships where end_date is greater than current date.
-                // option 1: make new method that does a join on member and membership where email = member_email.
-
-                // option 2: get all active memberships, then find and return members with matching emails.
-                // use set, no duplicates.
-
                 - seeing all memberships
-                - finding memberships of one member
                 - seeing all active memberships
+                - finding memberships of one member
                 - adding a membership
                 - deleting a membership
                 - updating a membership

@@ -7,6 +7,7 @@ public interface MembershipService {
     Membership findOneMembership(Membership membership);
     List<Membership> findAllMembershipsOfOneMember(String memberEmail);
     List<Membership> findAllMemberships();
+    List<Membership> findAllActiveMemberships();
     boolean insertOneMembership(Membership membership);
     boolean deleteOneMembership(int membershipId);
     boolean deleteOneMembership(Membership membership);

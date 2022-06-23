@@ -9,6 +9,7 @@ public interface MembershipDAO {
     Membership findOneMembership(Membership membership);
     List<Membership> findAllMembershipsOfOneMember(String memberEmail);
     List<Membership> findAllMemberships();
+    List<Membership> findAllActiveMemberships();
     boolean insertOneMembership(Membership membership);
     //public boolean updateOneMembership(Membership membership);
     boolean deleteOneMembership(Membership membership);

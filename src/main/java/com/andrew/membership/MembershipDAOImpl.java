@@ -139,6 +139,36 @@ public class MembershipDAOImpl implements MembershipDAO {
         }
         return null;
     }
+    @Override
+    public List<Membership> findAllActiveMemberships() {
+        List<Membership> activeMemberships = new ArrayList<>();
+
+        String stmt = "SELECT * FROM memberships where end_date >= DATE('now','localtime');";
+        try {
+            PreparedStatement pstmt = db.getConnection().prepareStatement(stmt);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                // getting fields from the result set which contains a record of memberships.
+                int rsMembershipId = rs.getInt(1);
+                String rsStartDate = rs.getString(2);
+                String rsEndDate = rs.getString(3);
+                String rsType = rs.getString(4);
+                String rsMemberEmail = rs.getString(5);
+
+                LocalDate startDate = LocalDate.parse(rsStartDate);
+                LocalDate endDate = LocalDate.parse(rsEndDate);
+                MembershipType type = MembershipType.valueOf(rsType);
+                // making membership object to return
+                activeMemberships.add(new Membership(startDate, endDate, rsMemberEmail, type, rsMembershipId));
+            }
+            return activeMemberships.size() == 0? null: activeMemberships;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+
+    }
 
     @Override
     public boolean insertOneMembership(Membership membership) {
@@ -164,13 +194,7 @@ public class MembershipDAOImpl implements MembershipDAO {
         }
         return false;
     }
-    /*
-    @Override
-    public boolean updateOneMembership(Membership membership) {
-        return false;
-    }
 
-     */
 
     @Override
     public boolean deleteOneMembership(Membership membership) {

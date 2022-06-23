@@ -12,4 +12,7 @@ public interface MemberController {
     void displayFormAndInsertOneMember();
     void displayFormAndUpdateOneMember();
     void displayFormAndDeleteOneMember();
+    void displayAndDeleteAllMembers();
+    // finding active members
+    void displayAllActiveMembers();
 }

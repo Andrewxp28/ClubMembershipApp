@@ -1,28 +1,32 @@
 package com.andrew.member;
 
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import com.andrew.membership.Membership;
+import com.andrew.membership.MembershipService;
+import com.andrew.membership.MembershipServiceImpl;
+
+import java.util.*;
 
 public class MemberControllerImpl implements MemberController {
 
     // assumes connection connected already outside.
     // uses a service.
     MemberService memberService;
-
+    MembershipService membershipService;
     public MemberControllerImpl() {
         memberService = new MemberServiceImpl();
+        membershipService = new MembershipServiceImpl();
     }
 
 
     @Override
     public void displayMemberOptions() {
         String[] options = {"1: See all members",
-                "2: Find a member",
-                "3: Add a member",
-                "4: Update a member's details",
-                "5: Delete a member",
-                "6: Return to main menu"};
+                "2: See all active members",
+                "3: Find a member",
+                "4: Add a member",
+                "5: Update a member's details",
+                "6: Delete a member",
+                "7: Return to main menu"};
         for (String option: options) {
             System.out.println(option);
         }
@@ -37,7 +41,7 @@ public class MemberControllerImpl implements MemberController {
                 scanner.next();
             } catch (Exception ex) {
                 System.out.println("An unexpected error has happened. Please try again.");
-                //scanner.next();
+                scanner.next();
             }
             // checking option is within boundaries
             if (option > 0 && option <= options.length) {
@@ -58,19 +62,17 @@ public class MemberControllerImpl implements MemberController {
         switch (option) {
             // See all members
             case 1 -> displayAllMembers();
-
+            // See all active members
+            case 2 -> displayAllActiveMembers();
             // Find a member
-            case 2 -> displayFormAndFindOneMember();
-
+            case 3 -> displayFormAndFindOneMember();
             // Add a member
-            case 3 -> displayFormAndInsertOneMember();
-
+            case 4 -> displayFormAndInsertOneMember();
             // Update a member's details
-            case 4 -> displayFormAndUpdateOneMember();
-
+            case 5 -> displayFormAndUpdateOneMember();
             // Delete a member
-            case 5 -> displayFormAndDeleteOneMember();
-            // for case 6 we just return to main menu
+            case 6 -> displayFormAndDeleteOneMember();
+            // for case 7 and others we just return to main menu
         }
     }
 
@@ -219,6 +221,49 @@ public class MemberControllerImpl implements MemberController {
         }
         printOneSpacer();
     }
+
+    @Override
+    public void displayAllActiveMembers() {
+        // first get list of memberships
+        // then get the emails from list.
+        // then put into set.
+        // then find members with those emails from list.
+        // then print them.
+        printOneSpacer();
+        // Sets only hold unique values.
+        Set<String> activeMemberEmails;
+        List<Membership> activeMemberships = membershipService.findAllActiveMemberships();
+        if (activeMemberships == null) {
+            System.out.println("There are currently no active members");
+        } else {
+            // there are active memberships, so we find all active member emails.
+            activeMemberEmails = new HashSet<>();
+            for (Membership membership: activeMemberships) {
+                activeMemberEmails.add(membership.getMemberEmail());
+            }
+            // now we search db for member details for each member email from the set activeMemberEmails.
+            List<Member> activeMembers = new ArrayList<>();
+            for (String email: activeMemberEmails) {
+                // no need to worry about finding null members, sql db has proper constraints.
+                Member member = memberService.findOneMember(email);
+                activeMembers.add(member);
+            }
+            // now we loop and print members
+            for (Member member: activeMembers) {
+                System.out.println(member);
+            }
+
+        }
+
+
+        printOneSpacer();
+    }
+
+    @Override
+    public void displayAndDeleteAllMembers() {
+
+    }
+
 
     private void printOneMember(Member member) {
         System.out.println(

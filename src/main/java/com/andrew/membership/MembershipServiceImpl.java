@@ -31,6 +31,11 @@ public class MembershipServiceImpl implements MembershipService {
     }
 
     @Override
+    public List<Membership> findAllActiveMemberships() {
+        return membershipDAO.findAllActiveMemberships();
+    }
+
+    @Override
     public boolean insertOneMembership(Membership membership) {
         // need to check for duplicates.
         List<Membership> memberships = membershipDAO.findAllMembershipsOfOneMember(membership.getMemberEmail());

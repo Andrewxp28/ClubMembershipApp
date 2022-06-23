@@ -42,7 +42,7 @@ public class MemberTest {
 
     @Test
     @Order(2)
-    public void findOneMemberTest() {
+    public void insertAndFindOneMemberTest() {
         Member member = new Member("a.p@gmail.com", "Andrew", "Pham", "0466503107");
         dao.insertOneMember(member);
         Member rsMember = dao.findOneMember(member.getEmail());
@@ -64,9 +64,8 @@ public class MemberTest {
     @Test
     @Order(4)
     public void deleteOneMemberTest() {
-        // insert member
+        // inserted from previous test (2).
         Member member1 = new Member("a.p@gmail.com", "Andrew", "Pham", "0466503107");
-        dao.insertOneMember(member1);
         // delete member
         dao.deleteOneMember(member1.getEmail());
         // test to see if it is no longer in db
@@ -79,6 +78,7 @@ public class MemberTest {
     @Test
     @Order(5)
     public void findAllMembersTest() {
+        dao.deleteAllMembers();
         // make member objects
         Member member1 = new Member("a.p@gmail.com", "Andrew", "Pham", "0466503107");
         Member member2 = new Member("andy.fam@gmail.com", "Andy", "fam", "1234567890");
