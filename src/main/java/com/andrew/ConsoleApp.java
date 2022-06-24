@@ -27,7 +27,7 @@ public class ConsoleApp {
                 };
         // setup db
         SQLDB db = new SqliteSQLDBImpl();
-        db.initialiseDb("ClubDb7.db");
+        db.initialiseDb("src/main/sqlite_database/ClubDb.db");
         // setup up controllers
         MemberController memberController = new MemberControllerImpl();
         MembershipController membershipController = new MembershipControllerImpl();

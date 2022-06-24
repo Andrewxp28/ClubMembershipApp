@@ -36,6 +36,7 @@ public class MembershipControllerImpl implements MembershipController {
         for (String option: options) {
             System.out.println(option);
         }
+        System.out.print("Choose an option: ");
         Scanner scanner = new Scanner(System.in);
         int option = 0;
         boolean picked = false;
@@ -144,6 +145,7 @@ public class MembershipControllerImpl implements MembershipController {
         System.out.println("Search by membership details or membership id?");
         System.out.println("1: Membership details");
         System.out.println("2: Membership ID");
+        System.out.print("Choose an option: ");
         int option = 0;
         boolean picked = false;
         while (!picked) {

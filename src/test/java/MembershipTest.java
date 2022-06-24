@@ -1,5 +1,8 @@
 import com.andrew.db.SQLDB;
 import com.andrew.db.SqliteSQLDBImpl;
+import com.andrew.member.Member;
+import com.andrew.member.MemberDAO;
+import com.andrew.member.MemberDAOImpl;
 import com.andrew.membership.Membership;
 import com.andrew.membership.MembershipDAO;
 import com.andrew.membership.MembershipDAOImpl;
@@ -18,9 +21,12 @@ public class MembershipTest {
     @BeforeAll
     public static void initDB() {
         db = SqliteSQLDBImpl.getInstance();
-        db.initialiseDb("ClubDb5.db");
+        db.initialiseDb("src/main/sqlite_database/ClubDbTESTING.db");
         dao = new MembershipDAOImpl();
         dao.deleteAllMemberships();
+        MemberDAO memberDao = new MemberDAOImpl();
+        memberDao.deleteAllMembers();
+        memberDao.insertOneMember(new Member("a.p@gmail.com", "Andrew", "Pham", "0987654321"));
     }
 
     @AfterAll

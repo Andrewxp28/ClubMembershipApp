@@ -32,6 +32,7 @@ public class MemberControllerImpl implements MemberController {
         for (String option: options) {
             System.out.println(option);
         }
+        System.out.print("Choose an option: ");
         Scanner scanner = new Scanner(System.in);
         int option = 0;
         boolean picked = false;

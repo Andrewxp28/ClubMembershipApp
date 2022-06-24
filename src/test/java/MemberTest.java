@@ -17,11 +17,7 @@ public class MemberTest {
     @BeforeAll
     public static void initDB() {
         db = SqliteSQLDBImpl.getInstance();
-        /*
-        db.setPath("ClubDb5.db");
-        db.getConnection();
-         */
-        db.initialiseDb("ClubDb5.db");
+        db.initialiseDb("src/main/sqlite_database/ClubDbTESTING.db");
         dao = new MemberDAOImpl();
     }
 
