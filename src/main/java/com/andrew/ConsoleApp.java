@@ -59,6 +59,7 @@ public class ConsoleApp {
             }
         }
         scanner.close();
+        db.closeConnection();
     }
     public static void printMainMenu(String[] options) {
         for (String option: options) {

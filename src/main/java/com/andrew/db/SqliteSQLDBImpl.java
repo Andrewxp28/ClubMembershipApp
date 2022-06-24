@@ -2,13 +2,14 @@ package com.andrew.db;
 
 import org.sqlite.SQLiteConfig;
 
-import java.awt.*;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
+/**
+ * A concrete implementation of SQLDB interface. This class interacts with a Sqlite database.
+ */
 public class SqliteSQLDBImpl implements SQLDB {
     private static SqliteSQLDBImpl db;
     private static final String DEFAULT_PATH_STARTER = "jdbc:sqlite:";
@@ -21,10 +22,6 @@ public class SqliteSQLDBImpl implements SQLDB {
         return db;
     }
     @Override
-    /**
-     *
-     *
-     */
     public Connection getConnection() {
         // connect to the db based on path.
         try {
