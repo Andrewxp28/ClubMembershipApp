@@ -10,6 +10,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A concrete implementation of MemberDAO. Handles all database queries and operations with a SQLDB database.
+ */
 public class MemberDAOImpl implements MemberDAO {
     private final SQLDB db;
 

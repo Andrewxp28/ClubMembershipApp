@@ -1,12 +1,8 @@
 package com.andrew.member;
 
-import com.andrew.membership.Membership;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-
+/** An entity used to represent a Member. This class is used to interact with the system and the database.
+ *  A member is defined by having an email address, first name, last name, and phone number.
+ */
 public class Member implements Comparable<Member> {
     private String email;
     private String firstName;

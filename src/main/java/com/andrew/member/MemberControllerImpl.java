@@ -4,8 +4,17 @@ import com.andrew.membership.Membership;
 import com.andrew.membership.MembershipService;
 import com.andrew.membership.MembershipServiceImpl;
 
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashSet;
 
+/**
+ * A concrete implementation of MemberController interface. Controls and executes commands given from the application.
+ * Displays using console.
+ */
 public class MemberControllerImpl implements MemberController {
 
     // assumes connection connected already outside.
@@ -225,11 +234,6 @@ public class MemberControllerImpl implements MemberController {
 
     @Override
     public void displayAllActiveMembers() {
-        // first get list of memberships
-        // then get the emails from list.
-        // then put into set.
-        // then find members with those emails from list.
-        // then print them.
         printOneSpacer();
         // Sets only hold unique values.
         Set<String> activeMemberEmails;
@@ -286,7 +290,10 @@ public class MemberControllerImpl implements MemberController {
         printOneSpacer();
     }
 
-
+    /**
+     * Prints a member in a user-friendly way.
+     * @param member Member instance to be printed.
+     */
     private void printOneMember(Member member) {
         System.out.println(
                 "Member email: " + member.getEmail() + "\n" +
@@ -295,6 +302,10 @@ public class MemberControllerImpl implements MemberController {
                 "Phone: " + member.getPhone() + "\n"
         );
     }
+
+    /**
+     * Adds formatting to the console output.
+     */
     private void printOneSpacer() {
         System.out.println("--------------------------------------------------");
     }
