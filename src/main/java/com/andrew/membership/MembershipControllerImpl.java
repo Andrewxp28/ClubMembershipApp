@@ -130,7 +130,7 @@ public class MembershipControllerImpl implements MembershipController {
         // now we search db for memberships with memberEmail.
         List<Membership> rsMemberships = membershipService.findAllMembershipsOfOneMember(memberEmail);
         if (rsMemberships == null) {
-            System.out.println("The member with the email " + memberEmail + "does not have any memberships");
+            System.out.println("The member with the email " + memberEmail + " does not have any memberships");
         } else {
             // print the memberships
             for (Membership membership: rsMemberships) {
