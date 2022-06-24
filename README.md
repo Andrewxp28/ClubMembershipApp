@@ -5,6 +5,7 @@ This is a self-contained application using Sqlite with a single admin user; the 
 stored locally and can only be accessed by one user.
 
 **Premise and Behaviour of The System:**
+
 The club official needs to manage the memberships of members within the club. A member can
 be a person with an active or no longer active membership. They are considered a member if 
 at some point in time they have held a membership. A member can have multiple memberships 
