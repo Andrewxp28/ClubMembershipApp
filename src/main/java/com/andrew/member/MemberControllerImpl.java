@@ -10,8 +10,9 @@ public class MemberControllerImpl implements MemberController {
 
     // assumes connection connected already outside.
     // uses a service.
-    MemberService memberService;
-    MembershipService membershipService;
+    private MemberService memberService;
+    private MembershipService membershipService;
+
     public MemberControllerImpl() {
         memberService = new MemberServiceImpl();
         membershipService = new MembershipServiceImpl();
@@ -84,18 +85,16 @@ public class MemberControllerImpl implements MemberController {
 
     @Override
     public void displayAllMembers() {
+        printOneSpacer();
         // get list of members in db
         List<Member> members = memberService.findAllMembers();
         if (members == null) {
-            printOneSpacer();
             System.out.println("There are currently no members...");
-            printOneSpacer();
-            return;
-        }
-        // write members to console
-        printOneSpacer();
-        for (Member member: members) {
-            System.out.println(member);
+        } else {
+            // write members to console
+            for (Member member: members) {
+                System.out.println(member);
+            }
         }
         printOneSpacer();
         // return.
@@ -110,7 +109,9 @@ public class MemberControllerImpl implements MemberController {
         try {
             memberEmail = scanner.next();
         } catch (Exception ex) {
+            printOneSpacer();
             System.out.println("An unexpected error has happened. Please try again.");
+            printOneSpacer();
             return;
         }
         // now we search the db for member with that email
@@ -191,10 +192,6 @@ public class MemberControllerImpl implements MemberController {
         if (newFirstName.equals("*")) newFirstName = rsMember.getFirstName();
         if (newLastName.equals("*")) newLastName = rsMember.getLastName();
         if (newPhone.equals("*")) newPhone = rsMember.getPhone();
-        System.out.println("newEmail: " + newEmail);
-        System.out.println("newFirstName: " + newFirstName);
-        System.out.println("newLastName: " + newLastName);
-        System.out.println("newPhone: " + newPhone);
 
         // make a member object and update the db using memberService.
         Member updatedMember = new Member(newEmail, newFirstName, newLastName, newPhone);
@@ -265,7 +262,7 @@ public class MemberControllerImpl implements MemberController {
     @Override
     public void displayAndDeleteAllMembers() {
         printOneSpacer();
-        System.out.print("Warning: This will delete all members and their corresponding memberships for the database" +
+        System.out.print("Warning: This will delete all members and their corresponding memberships from the database" +
                 ". Do you wish to continue? (y/n): ");
         String ans;
         Scanner scanner = new Scanner(System.in);

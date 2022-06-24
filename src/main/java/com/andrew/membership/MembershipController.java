@@ -11,6 +11,6 @@ public interface MembershipController {
     void displayFormAndFindMembershipsOfOneMember();
     void displayFormAndFindOneMembership();
     void displayFormAndInsertOneMembership();
-    void displayFormAndUpdateOneMembership();
     void displayFormAndDeleteOneMembership();
+    void displayAndDeleteAllMemberships();
 }

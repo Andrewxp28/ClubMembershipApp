@@ -143,7 +143,8 @@ public class MembershipDAOImpl implements MembershipDAO {
     public List<Membership> findAllActiveMemberships() {
         List<Membership> activeMemberships = new ArrayList<>();
 
-        String stmt = "SELECT * FROM memberships where end_date >= DATE('now','localtime');";
+        String stmt = "SELECT * FROM memberships where end_date >= DATE('now','localtime') AND " +
+                "start_date <= DATE('now','localtime');";
         try {
             PreparedStatement pstmt = db.getConnection().prepareStatement(stmt);
             ResultSet rs = pstmt.executeQuery();

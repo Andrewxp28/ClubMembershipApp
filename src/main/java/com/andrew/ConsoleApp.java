@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 
 public class ConsoleApp {
+
     public static void main(String[] args) {
         // runs console application
         run();
@@ -54,25 +55,8 @@ public class ConsoleApp {
                 memberController.displayMemberOptions();
             } else if (option == 2) {
                 // use display membership options method here with its controller
+                membershipController.displayMembershipOptions();
             }
-            /*
-                we can separate these options into two categories, members and membership options.
-                we need options for:
-                - seeing all members
-                - seeing active members
-                - finding one member
-                - adding a member
-                - updating a member
-                - deleting a member
-
-                - seeing all memberships
-                - seeing all active memberships
-                - finding memberships of one member
-                - adding a membership
-                - deleting a membership
-                - updating a membership
-
-             */
         }
         scanner.close();
     }
