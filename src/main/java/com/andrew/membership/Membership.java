@@ -1,9 +1,12 @@
 package com.andrew.membership;
 
 
-import com.andrew.member.Member;
-
 import java.time.LocalDate;
+
+/** An entity used to represent a Membership. This class is used as an intermediary
+ * object to handle interactions between the system and the database.
+ *  A membership is defined by having a startDate, endDate, memberEmail, type, and membershipId.
+ */
 
 public class Membership {
     private LocalDate startDate;
@@ -19,7 +22,7 @@ public class Membership {
         this.type = type;
         this.membershipId = membershipId;
     }
-    // inisial constructor. (we don't manually assign an membershipId, db does this for us.
+    // initial constructor. (we don't manually assign an membershipId, db does this for us.)
     public Membership(LocalDate startDate, LocalDate endDate, String memberEmail, MembershipType type) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -52,16 +55,6 @@ public class Membership {
                 "}";
     }
 
-    /*
-
-    @Override
-    public String toString() {
-        return "{email: " + email +
-                ", first name: " + firstName +
-                ", last name: " + lastName +
-                ", phone: " + phone + "}";
-    }
-     */
     public LocalDate getStartDate() {
         return startDate;
     }

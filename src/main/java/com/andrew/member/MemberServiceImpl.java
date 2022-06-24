@@ -2,6 +2,9 @@ package com.andrew.member;
 
 import java.util.List;
 
+/**
+ * A concrete implementation of MemberService interface.
+ */
 public class MemberServiceImpl implements MemberService {
 
     MemberDAO memberDao;

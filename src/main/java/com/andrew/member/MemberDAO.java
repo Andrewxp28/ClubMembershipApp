@@ -2,7 +2,8 @@ package com.andrew.member;
 
 import java.util.List;
 
-/** A Data Access Object (DAO) interface that interacts with the database. MemberDAO handles all database related
+/** A Data Access Object (DAO) interface that interacts with the database. MemberDAO handles all
+ * Member database-related
  * operations.
  */
 public interface MemberDAO {

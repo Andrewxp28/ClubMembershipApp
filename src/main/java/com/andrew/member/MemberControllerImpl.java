@@ -17,7 +17,7 @@ import java.util.HashSet;
  */
 public class MemberControllerImpl implements MemberController {
 
-    // assumes connection connected already outside.
+    // connection connected already outside.
     // uses a service.
     private MemberService memberService;
     private MembershipService membershipService;

@@ -1,6 +1,7 @@
 package com.andrew.member;
 
-/** An entity used to represent a Member. This class is used to interact with the system and the database.
+/** An entity used to represent a Member. This class is used as an intermediary
+ * object to handle interactions between the system and the database.
  *  A member is defined by having an email address, first name, last name, and phone number.
  */
 public class Member implements Comparable<Member> {

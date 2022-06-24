@@ -17,7 +17,7 @@ public interface MemberController {
     void executeMemberOption(int option);
 
     /**
-     * Displays all members to the console.
+     * Displays all members.
      */
     void displayAllMembers();
 

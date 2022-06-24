@@ -2,7 +2,6 @@ package com.andrew.membership;
 
 import com.andrew.db.SQLDB;
 import com.andrew.db.SqliteSQLDBImpl;
-import com.andrew.member.Member;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -173,10 +172,6 @@ public class MembershipDAOImpl implements MembershipDAO {
 
     @Override
     public boolean insertOneMembership(Membership membership) {
-        /* Reminder service layer needs to check for duplicates
-        *   Remove this check later. */
-        // well check cannot be made feasibly here due to PK(membership_id) of membership table.
-        // service layer will check.
 
         String stmt = "INSERT INTO memberships" +
                 "(start_date,end_date,type,member_email) " +

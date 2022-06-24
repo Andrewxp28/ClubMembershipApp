@@ -12,6 +12,9 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * A concrete implementation of MembershipController.
+ */
 public class MembershipControllerImpl implements MembershipController {
 
     private MembershipService membershipService;
@@ -413,6 +416,10 @@ public class MembershipControllerImpl implements MembershipController {
         // else we just return to main menu;
         printOneSpacer();
     }
+    /**
+     * Prints a membership in a user-friendly way.
+     * @param membership Membership instance to be printed.
+     */
     private void printOneMembership(Membership membership) {
         System.out.print(
                 "MEMBERSHIP ID: " + membership.getMembershipId() + "\n" +
@@ -422,6 +429,10 @@ public class MembershipControllerImpl implements MembershipController {
                         "TYPE: " + membership.getType() + "\n"
         );
     }
+
+    /**
+     * Adds formatting to the console output.
+     */
     private void printOneSpacer() {
         System.out.println("--------------------------------------------------");
     }
