@@ -10,7 +10,9 @@ import com.andrew.membership.MembershipControllerImpl;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
+/**
+ * Entry point for console application for the Club Administration application.
+ */
 public class ConsoleApp {
 
     public static void main(String[] args) {
@@ -18,6 +20,9 @@ public class ConsoleApp {
         run();
     }
 
+    /**
+     * Runs the console application.
+     */
     public static void run() {
 
         String[] mainMenuOptions =
@@ -61,6 +66,11 @@ public class ConsoleApp {
         scanner.close();
         db.closeConnection();
     }
+
+    /**
+     * Prints an array of strings to console.
+     * @param options String[] of strings to be printed.
+     */
     public static void printMainMenu(String[] options) {
         for (String option: options) {
             System.out.println(option);
